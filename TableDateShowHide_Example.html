@@ -1,0 +1,152 @@
+<html>
+<head><title>TableDateShowHide</title>
+<meta content="" name="Keywords">
+
+<style type="text/css">
+
+.dtShow {
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    width:8px;
+    height:8px;
+	background-color: #00FF00;
+	display: inline-block;
+}	
+</style>
+
+</head>
+<body>
+
+
+<div align="center">
+
+	<h1>TableDateShowHide</h1>
+
+	<hr width="90%"/>
+<br> 
+</div> 
+
+	<div id="tcont">
+	<table id="mytbl" rules="all" style="border: solid 1px black">
+		<thead>
+		<tr>
+			<th>index</th>
+			<th>fruit</th>
+			<th>date</th>
+		</tr/>
+		</thead>
+		<tbody>
+		<tr>
+			<td>1</td>
+			<td>bannana</td>
+			<td class="dt"><div class="dtShow"></div> 2013-12-25</td>
+		</tr/>
+		<tr>
+			<td>2</td>
+			<td>apple</td>
+			<td class="dt"><div class="dtShow"></div> 2013-10-15</td>
+		</tr/>
+		<tr>
+			<td>3</td>
+			<td>peach</td>
+			<td class="dt"><div class="dtShow"></div> 2014-06-07</td>
+		</tr/>
+		<tr>
+			<td>4</td>
+			<td>apple</td>
+			<td class="dt"><div class="dtShow"></div> 2015-03-15</td>
+		</tr/>
+		<tr>
+			<td>5</td>
+			<td>orange</td>
+			<td class="dt"><div class="dtShow"></div> 2013-11-01</td>
+		</tr/>
+		</tbody>
+	</table>
+	
+	</div>
+	
+	<br/>
+	<input type="button" id="butn" value="Highlight future dates with an Icon" />
+
+	<br/>
+	Meaning hide records that occurred in the past<br/>
+	Intended to be used with a cookie and allow new items to be displayed with an icon, for page visitors. 
+	
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+$(function() {
+
+		// find the date <td>, 
+		// get the innerHTML 
+		// parse 
+		// convert to a Date or better yet timestamp 
+		// compare 
+		// find child  div.dtShow
+		// make hidden or visible 
+		
+		
+		$('#butn').on('click', function() {
+		
+			console.log('yep - clicked it');
+			
+			
+			var reg = /(\d{4})-(\d{2})-(\d{2})/;
+			
+			
+			// $('#mytbl tbody tr:nth-child(3) td:nth-child(3)').
+			$('#mytbl tbody tr').each(function() {
+			
+					// var insid = $(this).find('td:nth-child(3)').html();
+					
+					var td_elem = $(this).find('td:nth-child(3)');
+					
+					var insid = td_elem.html();
+					
+					
+					var x = 3;
+					
+					
+					
+					var date_shown = insid.substring(insid.length-10);
+					
+					console.log('date_shown ' + date_shown);
+					
+					
+					
+				
+					// 
+					// var resA = myDT.match(reg);
+					var resA = date_shown.match(reg);
+					
+					var year = resA[1];
+					var month = resA[2] - 1;
+					var day = resA[3];
+					
+					var show_date = new Date(year, month, day);
+					
+					var now = new Date();
+					
+					if (now.getTime() > show_date.getTime()) {
+					
+						td_elem.find('div.dtShow').css('visibility', 'hidden');
+					
+					}
+			
+			}); 
+			
+			
+			
+				
+			
+			
+		});
+		
+		
+
+});
+</script>
+</body>
+</html>
